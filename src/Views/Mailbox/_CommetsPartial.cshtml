@@ -1,0 +1,27 @@
+﻿@model WebApplication.Models.AnnouncementViewModel
+
+@if  (Model.Comments != null)
+{
+    foreach (var item in Model.Comments)
+    {
+
+   <div class="box box-primary">
+            <div class="box-header with-border">
+                <div class="label-danger">@Html.ValidationMessage("Error")</div>
+                <h4>
+                    Comment From: @Html.DisplayFor(modelItem => item.From)
+                    <span class="mailbox-read-time pull-right">@Html.DisplayFor(modelitem => item.CreateAt)</span>
+                </h4>
+            </div>
+            <div class="box-body no-padding">
+                <div class="mailbox-read-info">
+                </div>
+
+                <div class="mailbox-read-message">@Html.Raw(HttpUtility.HtmlDecode(item.Text))
+                </div>
+            </div>
+            <div class="box-footer">
+            </div>
+        </div>
+    }
+}

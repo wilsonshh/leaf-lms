@@ -1,0 +1,83 @@
+﻿@model WebApplication.Models.AnnouncementViewModel
+
+@{
+    ViewBag.Title = "Announcement Status: ";
+    ViewBag.SubTitle = "";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@using System.Globalization
+<div class="row">
+    <div class="col-xs-3">
+        <a href="@Url.Action("Read", "Mailbox", new {id = Model.ID})" class="btn btn-primary btn-block margin-bottom">Back to Annoucement</a>
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Folders</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-inbox"></i> Inbox
+                            <span class="label label-primary pull-right">12</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-9">
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Users</h3>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Announcement</th>
+                            <th>User Name</th>
+                            <th>Stats</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.AnnouncementReads != null)
+                        {
+                            foreach (var item in Model.AnnouncementReads.OrderBy(m => m.UserName))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => m.Subject)</td>
+                                    <td>@Html.DisplayFor(m => item.UserName)</td>
+                                    <td>@Html.DisplayFor(m => item.Status) </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Announcement</th>
+                            <th>User Name</th>
+                            <th>Stats</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}

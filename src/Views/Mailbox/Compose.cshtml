@@ -1,0 +1,107 @@
+﻿@model WebApplication.Models.AnnouncementViewModel
+@{
+    ViewBag.Title = "Announcement" ;
+    ViewBag.SubTitle = "Compose";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Mailbox/Compose/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/css")
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="@Url.Action("Inbox", "Mailbox")" class="btn btn-primary btn-block margin-bottom">Back to Inbox</a>
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Folders</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                    <li>
+                        <a href="@Url.Action("Inbox", "Mailbox")">
+                            <i class="fa fa-inbox"></i> Inbox
+                            <span class="label label-primary pull-right">12</span>
+                        </a>
+                    </li>
+                    @*<li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>*@
+                    @*<li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>*@
+                </ul>
+            </div>
+        </div>
+        <div class="box box-solid">
+            @*<div class="box-header with-border">
+                <h3 class="box-title">Labels</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>*@
+            @*<div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#"><i class="fa fa-circle-o text-red"></i> Important</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li>
+                    </ul>
+                </div>*@
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        @using (Html.BeginForm("Compose", "MailBox", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Compose New Announcement</h3>
+                </div>
+                <div class="box-body">
+                    @*<div class="form-group">
+                            <input class="form-control" placeholder="To:">
+                        </div>*@
+                    <div class="form-group">
+                        @*<input class="form-control" placeholder="Subject:">*@
+                        @Html.TextBoxFor(m => m.Subject, new { @class="form-control", placeholder = "Subject:" })
+                        @Html.ValidationMessageFor(m => m.Subject, "",new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(m=>m.Body, new { id = "compose-textarea", @class = "form-control", style= "height: 300px", placeholder = "Body:" })
+                        @Html.ValidationMessageFor(m => m.Body, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="form-group">
+                        <div class="btn btn-default btn-file">
+                            <i class="fa fa-paperclip"></i> Attachment
+                            <input type="file" name="attachment">
+                        </div>
+                        <p class="help-block">Max. 32MB</p>
+                    </div>*@
+                </div>
+                <div class="box-footer">
+                    <div class="pull-right">
+                        @*<button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>*@
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                    </div>
+                    <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/js")
+        @Scripts.Render("~/Scripts/Mailbox/Compose.js")
+    }
